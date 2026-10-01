@@ -18,8 +18,19 @@ dotenv.config({ path: join(__dirname, '..', '.env') })
 const app = express()
 const PORT = process.env.PORT || 5000
 
+if (!process.env.ADMIN_PASSWORD) {
+  console.error('ADMIN_PASSWORD is required to start the server')
+  process.exit(1)
+}
+
+const allowedOrigins = (process.env.CLIENT_URL || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean)
+
 app.use(cors({ origin: (origin, callback) => {
     if (!origin || origin.includes('localhost:') || origin === 'null') return callback(null, true)
+    if (allowedOrigins.includes(origin)) return callback(null, true)
     callback(new Error('Not allowed by CORS'))
   }, credentials: true }))
 app.use(express.json())
@@ -31,6 +42,10 @@ app.use('/api/orders', orderRoutes)
 app.use('/api/contact', contactRoutes)
 
 app.post('/api/auth/create-admin', async (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(404).json({ message: 'Not found' })
+  }
+
   try {
     const { email, password, name } = req.body
     const existing = await User.findOne({ email })
@@ -55,7 +70,7 @@ const createDefaultAdmin = async () => {
   try {
     const existing = await User.findOne({ email: 'admin@gemsinsider.com' })
     if (!existing) {
-      const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'admin123', 10)
+      const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10)
       const user = new User({ email: 'admin@gemsinsider.com', password: hashed, name: 'Admin', role: 'admin' })
       await user.save()
       console.log('Default admin account created')
