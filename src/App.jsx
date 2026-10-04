@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { authService, orderService, contactService, checkAuth, getUserFromToken, setToken, clearToken } from './api'
 import productsData from './data/products.json'
 import './App.css'
@@ -43,6 +43,30 @@ function handleFullscreen(event) {
   } else if (video?.webkitEnterFullscreen) {
     video.webkitEnterFullscreen()
   }
+}
+
+function LazyVideo({ src, label }) {
+  const videoRef = useRef(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || shouldLoad) return undefined
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setShouldLoad(true)
+        observer.disconnect()
+      }
+    }, { rootMargin: '300px 0px' })
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [shouldLoad])
+
+  return (
+    <video ref={videoRef} autoPlay={shouldLoad} loop muted playsInline preload="none" aria-label={label}>
+      {shouldLoad && <source src={src} type="video/mp4" />}
+    </video>
+  )
 }
 
 function readStorage(key, fallback) {
@@ -449,9 +473,7 @@ function App() {
           {visibleProducts.map((product, index) => (
             <article className="product-card" key={`${product.id}-${index}`}>
               <div className="product-media">
-                <video autoPlay loop muted playsInline preload="metadata" aria-label={`${product.name} gemstone video`}>
-                  <source src={product.media} type="video/mp4" />
-                </video>
+                <LazyVideo src={product.media} label={`${product.name} gemstone video`} />
                 <span>{product.category}</span>
                 <button className="fullscreen-button" type="button" aria-label={`View ${product.name} video fullscreen`} onClick={handleFullscreen}>⛶</button>
               </div>
@@ -549,9 +571,7 @@ function App() {
           {gemstones.map((gemstone, index) => (
             <a className={`gem-card gem-card-${index + 1}`} href="#collection" onClick={(event) => handleNavigation(event, '#collection')} key={gemstone.name}>
               <div className="gem-media">
-                <video autoPlay loop muted playsInline preload="metadata" aria-label={`${gemstone.name} gemstone video`}>
-                  <source src={gemstone.media} type="video/mp4" />
-                </video>
+                <LazyVideo src={gemstone.media} label={`${gemstone.name} gemstone video`} />
                 <span className="gem-index">0{index + 1}</span>
                 <button className="fullscreen-button" type="button" aria-label={`View ${gemstone.name} video fullscreen`} onClick={handleFullscreen}>⛶</button>
               </div>
