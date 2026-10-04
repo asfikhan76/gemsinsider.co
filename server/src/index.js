@@ -9,7 +9,8 @@ import orderRoutes from './routes/orders.js'
 import contactRoutes from './routes/contact.js'
 import User from './models/User.js'
 import bcrypt from 'bcryptjs'
-import { readFileSync } from 'fs'
+import { existsSync } from 'fs'
+import { execFileSync } from 'child_process'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -83,15 +84,20 @@ const createDefaultAdmin = async () => {
 createDefaultAdmin()
 
 const distPath = join(__dirname, '..', '..', 'dist')
-try {
-  readFileSync(join(distPath, 'index.html'))
+if (!existsSync(join(distPath, 'index.html'))) {
+  try {
+    execFileSync('npm', ['run', 'build'], { cwd: join(__dirname, '..', '..'), stdio: 'inherit' })
+  } catch (error) {
+    console.error('Frontend build failed:', error.message)
+  }
+}
+
+if (existsSync(join(distPath, 'index.html'))) {
   app.use(express.static(distPath))
   app.get('*', (_req, res) => {
     res.sendFile(join(distPath, 'index.html'))
   })
   console.log('Serving frontend from dist/')
-} catch {
-  console.log('Frontend dist/ not found, run npm run build first')
 }
 
 app.listen(PORT, () => {
