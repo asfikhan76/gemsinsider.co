@@ -85,8 +85,9 @@ createDefaultAdmin()
 
 const distPath = join(__dirname, '..', '..', 'dist')
 if (!existsSync(join(distPath, 'index.html'))) {
+  const projectRoot = join(__dirname, '..', '..')
   try {
-    execFileSync('npm', ['run', 'build'], { cwd: join(__dirname, '..', '..'), stdio: 'inherit' })
+    execFileSync(process.execPath, [join(projectRoot, 'node_modules', 'vite', 'bin', 'vite.js'), 'build'], { cwd: projectRoot, stdio: 'inherit' })
   } catch (error) {
     console.error('Frontend build failed:', error.message)
   }
