@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "server"
+  ],
   "scripts": {
     "dev": "npm run dev:server & npm run dev:client",
     "dev:client": "vite",
@@ -10,6 +13,7 @@
     "build": "vite build",
     "lint": "echo 'No linter configured'",
     "preview": "vite preview",
+    "prestart": "npm run build",
     "start": "node server/src/index.js"
   },
   "dependencies": {
