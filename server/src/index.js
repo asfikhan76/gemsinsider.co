@@ -31,7 +31,16 @@ const allowedOrigins = (process.env.CLIENT_URL || '')
 
 app.use(cors({ origin: (origin, callback) => {
     if (!origin || origin.includes('localhost:') || origin === 'null') return callback(null, true)
-    if (allowedOrigins.includes(origin)) return callback(null, true)
+    try {
+      const requestOrigin = new URL(origin)
+      const host = requestOrigin.host
+      const appHost = process.env.HOST || ''
+      if (allowedOrigins.includes(origin) || host === appHost || host.endsWith('.hostingersite.com') || host === 'gemsinsider.co' || host === 'www.gemsinsider.co') {
+        return callback(null, true)
+      }
+    } catch {
+      return callback(new Error('Invalid request origin'))
+    }
     callback(new Error('Not allowed by CORS'))
   }, credentials: true }))
 app.use(express.json())
