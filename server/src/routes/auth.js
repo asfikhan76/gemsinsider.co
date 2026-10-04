@@ -7,6 +7,10 @@ import authMiddleware from '../middleware/auth.js'
 const router = express.Router()
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
+const ADMIN_EMAILS = new Set((process.env.ADMIN_EMAILS || 'admin@gemsinsider.com')
+  .split(',')
+  .map((email) => email.trim().toLowerCase())
+  .filter(Boolean))
 
 // Register
 router.post('/register', async (req, res) => {
@@ -17,7 +21,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'An account with this email already exists.' })
     }
     const hashedPassword = await bcrypt.hash(password, 10)
-    const role = password === ADMIN_PASSWORD ? 'admin' : 'user'
+    const role = ADMIN_EMAILS.has(email) && password === ADMIN_PASSWORD ? 'admin' : 'user'
     const user = new User({ email, password: hashedPassword, name, role })
     await user.save()
     const token = jwt.sign({ uid: user._id, email: user.email, name: user.name, role: user.role }, process.env.JWT_SECRET, { expiresIn: '30d' })

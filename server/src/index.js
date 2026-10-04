@@ -24,6 +24,11 @@ if (!process.env.ADMIN_PASSWORD) {
   process.exit(1)
 }
 
+const adminEmails = (process.env.ADMIN_EMAILS || 'admin@gemsinsider.com')
+  .split(',')
+  .map((email) => email.trim().toLowerCase())
+  .filter(Boolean)
+
 const allowedOrigins = (process.env.CLIENT_URL || '')
   .split(',')
   .map((origin) => origin.trim())
@@ -76,21 +81,23 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' })
 })
 
-const createDefaultAdmin = async () => {
+const createDefaultAdmins = async () => {
   try {
-    const existing = await User.findOne({ email: 'admin@gemsinsider.com' })
-    if (!existing) {
-      const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10)
-      const user = new User({ email: 'admin@gemsinsider.com', password: hashed, name: 'Admin', role: 'admin' })
-      await user.save()
-      console.log('Default admin account created')
+    const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10)
+    for (const email of adminEmails) {
+      const existing = await User.findOne({ email })
+      if (!existing) {
+        const user = new User({ email, password: hashed, name: 'Admin', role: 'admin' })
+        await user.save()
+        console.log(`Admin account created for ${email}`)
+      }
     }
   } catch (error) {
-    console.error('Could not create default admin:', error)
+    console.error('Could not create admin accounts:', error)
   }
 }
 
-createDefaultAdmin()
+createDefaultAdmins()
 
 const distPath = join(__dirname, '..', '..', 'dist')
 if (!existsSync(join(distPath, 'index.html'))) {
