@@ -17,9 +17,9 @@
     "start": "node server/src/index.js"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-react": "^5.0.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "vite": "^8.3.0"
+    "vite": "^7.2.6"
   }
 }
