@@ -160,8 +160,8 @@ function App() {
       paragraphs: [
         'We have a 15-day return policy, which means you have 15 days after receiving your item to request a return.',
         'To be eligible for a return, your item must be in the same condition that you received it, unworn or unused, with tags, and in its original packaging. You will also need the receipt or proof of purchase.',
-        'To start a return, contact us at GemsInsider@gmail.com. If your return is accepted, we will send you a return shipping address and instructions on how and where to send your package. Items sent back without first requesting a return will not be accepted.',
-        'You can contact us at GemsInsider@gmail.com with any return questions.',
+        'To start a return, contact us at contact@gemsinsider.co. If your return is accepted, we will send you a return shipping address and instructions on how and where to send your package. Items sent back without first requesting a return will not be accepted.',
+        'You can contact us at contact@gemsinsider.co with any return questions.',
         'Damages and issues',
         'Please inspect your order upon reception and contact us immediately if the item is defective, damaged, or incorrect so that we can evaluate the issue and make it right.',
         'Exceptions and non-returnable items',
@@ -173,7 +173,7 @@ function App() {
         'If merchandise is being shipped into the European Union, you have the right to cancel or return your order within 14 days for any reason and without justification. Your item must be in the same condition that you received it, unworn or unused, with tags, and in its original packaging. You will also need the receipt or proof of purchase.',
         'Refunds',
         'We will notify you once we have received and inspected your return and let you know whether the refund was approved. If approved, you will be automatically refunded through your original payment method within 10 business days. Please remember that your bank or credit card company may need additional time to process and post the refund.',
-        'If more than 15 business days have passed since we approved your return, contact us at GemsInsider@gmail.com.',
+        'If more than 15 business days have passed since we approved your return, contact us at contact@gemsinsider.co.',
       ],
     },
     terms: {
@@ -213,7 +213,7 @@ function App() {
         'Frequently Asked Questions (FAQs) - Gems Insider',
         '1. Are your gems ethically sourced? Yes, we take pride in offering ethically sourced gems. We work closely with miners and source directly from mining regions to support responsible and transparent sourcing.',
         '2. Are you direct suppliers from mines? Yes, we are direct suppliers and source many of our gems straight from the mines. This allows us to offer authentic, high-quality mineral specimens at competitive prices.',
-        '3. Do you accept payment plans? Yes, we offer payment plans on all items and flexible payment options are available. Contact us at GemsInsider@gmail.com to arrange a plan that suits you.',
+        '3. Do you accept payment plans? Yes, we offer payment plans on all items and flexible payment options are available. Contact us at contact@gemsinsider.co to arrange a plan that suits you.',
         '4. What payment methods do you accept? We accept a variety of secure payment methods, including credit cards, bank transfers, PayPal where applicable, and other secure online payment options. Contact us if you have a preferred payment method.',
         '5. Do you accept returns? Yes, we accept returns. Buyers are responsible for return shipping costs. A full refund will be issued once the item is received back in its original, undamaged condition, subject to our Return and Refund Policy.',
         '6. Do you offer combined shipping? Yes, we offer combined shipping on multiple purchases to help reduce shipping costs for our customers.',
@@ -225,8 +225,8 @@ function App() {
         '12. Have you participated in gem and mineral shows? Yes, we actively participate in major exhibitions, including the 1st Pakistan Gems and Minerals Festival 2026, held on 7-9 August. Upcoming exhibition: the 2nd Pakistan Gems and Minerals Festival 2026, scheduled for 13-15 November. These exhibitions allow us to source unique gems and connect with collectors.',
         '13. Are your gems natural? Yes, all our gems are represented as natural, and authenticity is our top priority. We do not deal in synthetic or lab-grown gems.',
         '14. Will I receive the exact gem shown in the photos? Yes, you will receive the exact same gem shown in the photos and videos, unless otherwise stated in the product information.',
-        '15. Can I reserve an item? Yes, we can reserve items for a limited time. Contact us at GemsInsider@gmail.com to request a reservation.',
-        '16. Do you offer wholesale or bulk deals? Yes, we provide wholesale options and bulk deals for serious buyers, collectors, and resellers. Contact us at GemsInsider@gmail.com for more information.',
+        '15. Can I reserve an item? Yes, we can reserve items for a limited time. Contact us at contact@gemsinsider.co to request a reservation.',
+        '16. Do you offer wholesale or bulk deals? Yes, we provide wholesale options and bulk deals for serious buyers, collectors, and resellers. Contact us at contact@gemsinsider.co for more information.',
         '17. How can I contact you? You can reach us through the website contact form, Instagram, Facebook, TikTok, or WhatsApp at +92 333 9940220. We are always available to assist with inquiries, orders, and custom requests.',
       ],
     },
@@ -678,7 +678,7 @@ function App() {
         <div className="footer-contact">
           <p className="footer-label">Contact us</p>
           <a href="tel:+923339940220">+92 333 9940220</a>
-          <a href="mailto:gemsinsider@gmail.com">gemsinsider@gmail.com</a>
+          <a href="mailto:contact@gemsinsider.co">contact@gemsinsider.co</a>
           <a href="https://wa.me/923339940220" target="_blank" rel="noreferrer">WhatsApp ↗</a>
         </div>
         <div className="footer-bottom">
