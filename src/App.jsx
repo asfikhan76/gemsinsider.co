@@ -16,6 +16,16 @@ const allCollectionProducts = productsData.map((product) => ({
   media: collectionMedia[product.media],
 }))
 
+const aboutGallery = [
+  '/event/1.jpeg',
+  '/event/2.jpeg',
+  '/event/3.jpeg',
+  '/event/4.jpeg',
+  '/event/5.jpeg',
+  '/event/6.jpeg',
+  '/event/7.jpeg',
+]
+
 const requirementLabels = {
   weight: 'Weight',
   dimension: 'Size',
@@ -98,6 +108,15 @@ function App() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [globalSearch, setGlobalSearch] = useState('')
   const [loading, setLoading] = useState(true)
+  const [galleryIndex, setGalleryIndex] = useState(0)
+
+  useEffect(() => {
+    if (aboutGallery.length < 2) return undefined
+    const timer = window.setInterval(() => {
+      setGalleryIndex((index) => (index + 1) % aboutGallery.length)
+    }, 2000)
+    return () => window.clearInterval(timer)
+  }, [])
 
   const navigation = [
     { label: 'Home', href: '#home', page: 'home' },
@@ -108,14 +127,14 @@ function App() {
   ]
 
   const gemstones = [
-    { name: 'Amethyst', origin: 'The violet signature', media: '/gems/amethyst.mp4' },
-    { name: 'Ametrine', origin: 'Two tones, one stone', media: '/gems/ametrine.mp4' },
-    { name: 'Aquamarine', origin: 'A breath of clear water', media: '/gems/aqua.mp4' },
-    { name: 'Kunzite', origin: 'Softly incandescent', media: '/gems/kunzite.mp4' },
-    { name: 'Peridot', origin: 'Green, with a golden pulse', media: '/gems/peridot.mp4' },
-    { name: 'Rubellite', origin: 'A red with its own gravity', media: '/gems/rubellite.mp4' },
-    { name: 'Tanzanite', origin: 'Blue at the edge of violet', media: '/gems/tanzanite.mp4' },
+    { name: 'Spinel', origin: 'A brilliance all its own', media: '/gems/spinel.mp4' },
+    { name: 'Sphene', origin: 'Fire caught in green', media: '/gems/sphene.mp4' },
     { name: 'Tourmaline', origin: 'Colour without compromise', media: '/gems/tourmaline.mp4' },
+    { name: 'Kunzite', origin: 'Softly incandescent', media: '/gems/kunzite.mp4' },
+    { name: 'Topaz', origin: 'Clarity, warmed by light', media: '/gems/topaz.mp4' },
+    { name: 'Tanzanite', origin: 'Blue at the edge of violet', media: '/gems/tanzanite.mp4' },
+    { name: 'Rubellite', origin: 'A red with its own gravity', media: '/gems/rubellite.mp4' },
+    { name: 'Aquamarine', origin: 'A breath of clear water', media: '/gems/aqua.mp4' },
   ]
 
   const teamMembers = [
@@ -509,8 +528,8 @@ function App() {
       <section className="home-intro" id="home">
         <div className="intro-copy">
           <p className="eyebrow">Gems Insider presents</p>
-          <h1>Your Own<br /><em>Mind ART</em></h1>
-          <p className="intro-description">A considered collection of natural gemstones for people who see beauty in the details others miss.</p>
+          <h1>from mines<br /><em>to markets</em></h1>
+          <p className="intro-description">A considered collection of earth mined natural gemstones for people who see beauty in the details others miss.</p>
           <a className="preview-link" href="#collection" onClick={(event) => handleNavigation(event, '#collection')}>Enter the collection <span aria-hidden="true">↗</span></a>
         </div>
         <div className="intro-mark" aria-hidden="true">GI<span>01</span></div>
@@ -624,6 +643,33 @@ function App() {
           <p>GEMS INSIDER is registered with respected industry and business organizations, including the Sarhad Chamber of Commerce &amp; Industry (<strong>SCCI</strong>), All Pakistan Commercial Exporters Association (<strong>APCEA</strong>), and the Pakistan Gems &amp; Minerals Manufacturers &amp; Exporters Association (<strong>PGMMA</strong>).</p>
           <p>Our mission is to provide carefully selected gemstones while maintaining professional standards and building long-term relationships based on trust, integrity, and quality. We believe every gemstone has its own unique character and story, and our goal is to bring that value to customers around the world.</p>
         </div>
+        <div className="about-gemology">
+          <h2>Gemology</h2>
+          <p>We are a team of passionate gemologists dedicated to the world of natural gemstones. Our knowledge and experience are supported by professional gemological training and continuous learning.</p>
+          <ul>
+            <li>Gemology (CBT - Level 3) — GJTC Pakistan.</li>
+            <li>Specialized Course Completion — SSEF.
+              <ul>
+                <li>Emerald</li>
+                <li>Ruby</li>
+                <li>Sapphire</li>
+                <li>Diamond</li>
+              </ul>
+            </li>
+          </ul>
+          <p>We also actively participate in gemstone exhibitions and industry events, including:</p>
+          <ul>
+            <li>26th Pakistan Gems &amp; Minerals Festival 2026</li>
+          </ul>
+          <p>Our focus is on authenticity, quality, and carefully selected natural gemstones for collectors, jewelry enthusiasts, and clients worldwide.</p>
+        </div>
+        <div className="about-slideshow" aria-label="Gallery">
+          {aboutGallery.length > 0 ? (
+            <img key={aboutGallery[galleryIndex]} src={aboutGallery[galleryIndex]} alt="Gems Insider gallery" />
+          ) : (
+            <div className="slideshow-placeholder">Gallery images coming soon</div>
+          )}
+        </div>
       </section>}
 
       {currentPage === 'home' && <section className="collection-section" id="featured-collection">
@@ -661,6 +707,8 @@ function App() {
           <p className="footer-label">Follow &amp; explore</p>
           <a href="https://www.instagram.com/gemsinsider.co" target="_blank" rel="noreferrer">Instagram ↗</a>
           <a href="https://www.tiktok.com/@gems_insider" target="_blank" rel="noreferrer">TikTok ↗</a>
+          <a href="http://youtube.com/@Gemsinsider" target="_blank" rel="noreferrer">YouTube ↗</a>
+          <a href="http://etsy.com/shop/GemsInsider" target="_blank" rel="noreferrer">Etsy ↗</a>
           <a href="#home" onClick={(event) => handleNavigation(event, '#home')}>Back to top ↑</a>
         </div>
         <div className="footer-policies">
